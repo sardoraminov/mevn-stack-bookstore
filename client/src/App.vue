@@ -1,7 +1,25 @@
+<script setup>
+import { useStore } from "vuex";
+import TheLoading from "./components/TheLoading.vue";
+import TheToast from "./components/TheToast.vue";
+import { computed } from "vue";
+
+const store = useStore();
+
+const loading = computed(() => {
+  return store.state.loading;
+});
+
+const toastShow = computed(() => {
+  return store.state.toast.show;
+});
+</script>
+
 <template>
   <div class="parent bg-slate-100">
-    
-    <router-view />
+    <TheLoading v-show="loading" />
+    <TheToast v-show="toastShow" />
+    <router-view></router-view>
   </div>
 </template>
 

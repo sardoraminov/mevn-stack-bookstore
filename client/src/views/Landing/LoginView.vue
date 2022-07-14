@@ -18,7 +18,8 @@
           placeholder="Password"
         />
         <button
-          class="button bg-sky-500 transition border border-sky-500 text-white rounded p-2 px-4 hover:bg-sky-600 hover:border-sky-600"
+          :disabled="loading"
+          class="button bg-sky-500 transition border border-sky-500 text-white rounded p-2 px-4 hover:bg-sky-600 hover:border-sky-600 disabled:bg-gray-200 disabled:cursor-default disabled:border-none"
           type="submit"
         >
           Kirish
@@ -36,13 +37,17 @@
 
 <script setup>
 import { useStore } from "vuex";
-import { reactive } from "vue";
+import { reactive, computed } from "vue";
 
 const store = useStore();
 
 const user = reactive({
   username: "",
   password: "",
+});
+
+const loading = computed(() => {
+  return store.state.loading;
 });
 
 const login = async (e) => {
