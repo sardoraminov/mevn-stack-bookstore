@@ -23,7 +23,8 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-app.use("/auth", require("./routes/auth"));
+app.use("/api/v1/auth", require("./routes/auth"));
+app.use("/api/v1/accounts", require("./routes/accounts"));
 
 app.listen(5000, () => {
   console.log("Server started!");

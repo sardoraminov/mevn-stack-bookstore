@@ -8,17 +8,27 @@
         class="box shadow bg-white w-80 border-2 space-y-4 flex flex-col p-5"
       >
         <input
-          v-model="user.username"
+          v-model="user.fullname"
+          type="text"
+          class="input-field border outline-none px-3 py-2"
+          placeholder="Ism familiya"
+        />
+        <input
+          v-model.trim="user.username"
           type="text"
           class="input-field border outline-none px-3 py-2"
           placeholder="Username"
         />
         <input
-          v-model="user.password"
+          v-model.trim="user.password"
           type="password"
-          class="input-field input-field border outline-none px-3 py-2"
+          class="input-field border outline-none px-3 py-2"
           placeholder="Password"
         />
+        <select v-model="user.gender" class="border outline-none px-3 py-2">
+          <option value="Erkak">Erkak</option>
+          <option value="Ayol">Ayol</option>
+        </select>
         <button
           :disabled="loading"
           class="button bg-sky-500 transition border border-sky-500 text-white rounded p-2 px-4 hover:bg-sky-600 hover:border-sky-600 disabled:bg-gray-200 disabled:cursor-default disabled:border-none"
@@ -46,6 +56,8 @@ const store = useStore();
 const user = reactive({
   username: "",
   password: "",
+  fullname: "",
+  gender: ""
 });
 
 const loading = computed(() => {
@@ -61,7 +73,6 @@ const register = async (e) => {
     store.dispatch("auth/register", user);
   }
 };
-
 </script>
 
 <style></style>

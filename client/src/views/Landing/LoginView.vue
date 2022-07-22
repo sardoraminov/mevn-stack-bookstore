@@ -6,13 +6,13 @@
         class="box shadow bg-white w-80 border-2 space-y-4 flex flex-col p-5"
       >
         <input
-          v-model="user.username"
+          v-model.trim="user.username"
           type="text"
           class="input-field border outline-none px-3 py-2"
           placeholder="Username"
         />
         <input
-          v-model="user.password"
+          v-model.trim="user.password"
           type="password"
           class="input-field input-field border outline-none px-3 py-2"
           placeholder="Password"

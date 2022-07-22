@@ -26,6 +26,9 @@ const toastOptions = computed(() => {
 </template>
 
 <style scoped>
+.toast {
+  z-index: 99999999999999999999;
+}
 .toast-box {
   animation: fade-up 0.4s ease;
 }

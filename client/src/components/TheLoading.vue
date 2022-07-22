@@ -20,6 +20,9 @@
 </template>
 
 <style scoped>
+.loading-spinner {
+  z-index: 9999999999999999999999999999;
+}
 .lds-spinner {
   color: official;
   display: inline-block;
@@ -41,7 +44,7 @@
   width: 6px;
   height: 18px;
   border-radius: 20%;
-  background: #0EA5E9;
+  background: #0ea5e9;
 }
 .lds-spinner div:nth-child(1) {
   transform: rotate(0deg);

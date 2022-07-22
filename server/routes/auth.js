@@ -7,8 +7,8 @@ const jwt = require("jsonwebtoken");
 // Register route
 router.post("/register", async (req, res) => {
   try {
-    const { username, password } = req.body;
-    if (!username || !password) {
+    const { username, password, fullname, gender } = req.body;
+    if (!username || !password || !fullname || !gender) {
       return res.json({
         status: "bad",
         msg: "Hamma qatorlarni to'ldiring",
@@ -29,10 +29,10 @@ router.post("/register", async (req, res) => {
       });
     }
 
-    if (password.length < 5) {
+    if (password.length < 8) {
       return res.json({
         status: "bad",
-        msg: "Parol kamida 5 ta belgidan tashkil topishi kerak!",
+        msg: "Parol kamida 8 ta belgidan tashkil topishi kerak!",
       });
     }
 
@@ -50,6 +50,8 @@ router.post("/register", async (req, res) => {
     const newUser = await new User({
       username,
       password: hashedPass,
+      fullname,
+      gender
     });
 
     const savedUser = await newUser.save();
@@ -97,13 +99,6 @@ router.post("/login", async (req, res) => {
     }
 
     const token = await jwt.sign({ user: existUser }, "tokensecret");
-
-    const decodedToken = await jwt.decode(
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYyYzZhZGYzYzM3Yzc5ZWE5OTZmY2E3ZSIsInVzZXJuYW1lIjoic2FyZG9yYW1pbm92IiwicGFzc3dvcmQiOiIkMmIkMTAkTGo1OU1Jd3J2cnFEL2NrMEhmL0xrTzhXSmY1TUJ1QTAyYW1rcDhVNlZMLmtlc2M0Z3VXUmUiLCJjcmVhdGVkQXQiOiIyMDIyLTA3LTA3VDA5OjU3OjA3LjU5MFoiLCJ1cGRhdGVkQXQiOiIyMDIyLTA3LTA3VDA5OjU3OjA3LjU5MFoiLCJfX3YiOjB9LCJpYXQiOjE2NTcxODg0NjN9.GVHQLC57QFPRdjpbljsZVtoOa7YfBUAzfRb13ebcaD0",
-      "tokensecret"
-    );
-
-    console.log(decodedToken);
 
     res.json({
       status: "ok",
