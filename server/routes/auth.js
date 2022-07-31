@@ -29,6 +29,13 @@ router.post("/register", async (req, res) => {
       });
     }
 
+    if (username === process.env.ADMIN_LOGIN) {
+      return res.json({
+        status: "bad",
+        msg: "Bu usernamedan foydalanish mumkin emas!",
+      });
+    }
+
     if (password.length < 8) {
       return res.json({
         status: "bad",
@@ -51,12 +58,12 @@ router.post("/register", async (req, res) => {
       username,
       password: hashedPass,
       fullname,
-      gender
+      gender,
     });
 
     const savedUser = await newUser.save();
 
-    const token = await jwt.sign({ user: existUser }, "tokensecret");
+    const token = await jwt.sign({ user: existUser }, process.env.TOKEN_KEYWORD);
 
     res.json({
       status: "ok",
@@ -98,7 +105,7 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    const token = await jwt.sign({ user: existUser }, "tokensecret");
+    const token = await jwt.sign({ user: existUser }, process.env.TOKEN_KEYWORD);
 
     res.json({
       status: "ok",
@@ -106,6 +113,31 @@ router.post("/login", async (req, res) => {
       user: existUser,
       token,
     });
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+// Admin login
+router.post("/admin", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+
+    if (!username || password) {
+      return res.json({ status: "bad", msg: "Hamma qatorlarni to'ldiring!" });
+    }
+
+    if (username !== process.env.ADMIN_LOGIN) {
+      return res.json({ status: "bad", msg: "Username noto'g'ri terilgan" });
+    }
+
+    if (password !==process.env.ADMIN_PASS) {
+      return res.json({ status: "bad", msg: "Parol noto'g'ri terilgan" });
+    }
+
+    const token = jwt.sign({ user: { username, password } }, process.env.TOKEN_KEYWORD);
+
+    res.json({ status: "ok", msg: "Admin sifatida tizimga kirdingiz", token });
   } catch (error) {
     console.log(error.message);
   }
