@@ -8,7 +8,7 @@
     "dev": "nodemon index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "dasturchioka",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
