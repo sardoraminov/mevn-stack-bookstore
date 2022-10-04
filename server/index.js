@@ -27,8 +27,8 @@ app.get("/", (req, res) => {
 });
 
 // router-level middleware
-app.use("/api/v1/auth", require("./routes/auth"));
-app.use("/api/v1/accounts", require("./routes/accounts"));
+app.use("/api/v1/auth", require("./routes/auth.routes"));
+app.use("/api/v1/accounts", require("./routes/accounts.routes"));
 
 app.listen(process.env.PORT, () => {
   console.log("Server started!");
